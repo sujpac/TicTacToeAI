@@ -4,3 +4,9 @@ while True:
 
     # TODO:
     current_player = '??'
+
+    print_board()
+
+    get_move()
+
+    
