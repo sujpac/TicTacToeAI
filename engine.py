@@ -2,9 +2,10 @@ from ast import literal_eval
 
 BOARD_WIDTH = 3
 BOARD_HEIGHT = 3
+EMPTY_SPACE = '_'
 
 def new_board():
-    board = [['-'] * BOARD_WIDTH for _ in range(BOARD_HEIGHT)]
+    board = [[EMPTY_SPACE] * BOARD_WIDTH for _ in range(BOARD_HEIGHT)]
     return board
 
 def render(board):
@@ -38,14 +39,14 @@ def get_winner(board):
     lines.append([board[0][2], board[1][1], board[2][0]])
 
     for line in lines:
-        if len(set(line)) == 1 and line[0] != '-':
+        if len(set(line)) == 1 and line[0] != EMPTY_SPACE:
             return line[0]
     return None
 
 def is_board_full(board):
     for i in range(BOARD_HEIGHT):
         for j in range(BOARD_WIDTH):
-            if board[i][j] == '-':
+            if board[i][j] == EMPTY_SPACE:
                 return False
 
     return True
