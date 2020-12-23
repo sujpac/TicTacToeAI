@@ -12,7 +12,7 @@ def render(board):
         print(' '.join(row))
 
 def get_move():
-    tup_string = input('Enter Move: ')
+    tup_string = input('Enter Move (row, column): ')
     return literal_eval(tup_string)
 
 def make_move(board, move, player):
@@ -63,6 +63,8 @@ def play():
         render(board)
 
         move_coords = get_move()
+        # TODO: check if move is valid, raise exception if invalid
+        # TODO: change make_move to be immutable
         make_move(board, move_coords, current_player)
         winner = get_winner(board)
 
