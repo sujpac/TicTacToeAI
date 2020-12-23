@@ -1,8 +1,9 @@
 from ast import literal_eval
+import random
 
 BOARD_WIDTH = 3
 BOARD_HEIGHT = 3
-EMPTY_SPACE = '_'
+EMPTY_SPACE = '-'
 
 def new_board():
     board = [[EMPTY_SPACE] * BOARD_WIDTH for _ in range(BOARD_HEIGHT)]
@@ -11,6 +12,7 @@ def new_board():
 def render(board):
     for row in board:
         print(' '.join(row))
+    print('')
 
 def get_move():
     tup_string = input('Enter Move (row, column): ')
@@ -44,11 +46,10 @@ def get_winner(board):
     return None
 
 def is_board_full(board):
-    for i in range(BOARD_HEIGHT):
-        for j in range(BOARD_WIDTH):
-            if board[i][j] == EMPTY_SPACE:
+    for row in range(BOARD_HEIGHT):
+        for col in range(BOARD_WIDTH):
+            if board[row][col] == EMPTY_SPACE:
                 return False
-
     return True
 
 def play():
@@ -63,19 +64,28 @@ def play():
         current_player = players[turn_number % 2]
         render(board)
 
-        move_coords = get_move()
+        move_coords = random_ai(board, current_player)
         # TODO: check if move is valid, raise exception if invalid
         # TODO: change make_move to be immutable
         make_move(board, move_coords, current_player)
         winner = get_winner(board)
 
         if winner:
-            print('Winner is %s' % winner)
+            print('Winner is %s!\n' % winner)
             render(board)
             break
 
         if is_board_full(board):
             print("It's a draw!")
+            render(board)
             break
 
         turn_number += 1
+
+def random_ai(board, player):
+    possible_moves = []
+    for row in range(BOARD_HEIGHT):
+        for col in range(BOARD_WIDTH):
+            if board[row][col] == EMPTY_SPACE:
+                possible_moves.append((row, col))
+    return possible_moves[random.randint(0, len(possible_moves) - 1)]
