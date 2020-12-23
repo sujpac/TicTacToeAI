@@ -1,5 +1,5 @@
 from ast import literal_eval
-import random
+import simple_ais as ai
 
 BOARD_WIDTH = 3
 BOARD_HEIGHT = 3
@@ -12,7 +12,7 @@ def new_board():
 def render(board):
     for row in board:
         print(' '.join(row))
-    print('')
+    print()
 
 def get_move():
     tup_string = input('Enter Move (row, column): ')
@@ -23,26 +23,36 @@ def make_move(board, move, player):
     # TODO: add logic for invalid moves
     return True
 
-def get_winner(board):
-    lines = []
+def get_line_coords():
+    line_coords = []
     # Add horizontal lines
     for row in range(BOARD_HEIGHT):
-        lines.append([])
+        line_coords.append([])
         for col in range(BOARD_WIDTH):
-            lines[-1].append(board[row][col])
+            line_coords[-1].append((row, col))
     # Add vertical lines
     for col in range(BOARD_WIDTH):
-        lines.append([])
+        line_coords.append([])
         for row in range(BOARD_HEIGHT):
-            lines[-1].append(board[row][col])
+            line_coords[-1].append((row, col))
     # Add diagonal lines
     # TODO: diagonal horizontal lines independent of board size
-    lines.append([board[0][0], board[1][1], board[2][2]])
-    lines.append([board[0][2], board[1][1], board[2][0]])
+    line_coords.append([(0, 0), (1, 1), (2, 2)])
+    line_coords.append([(0, 2), (1, 1), (2, 0)])
+
+    return line_coords
+
+def get_winner(board):
+    line_coords = get_line_coords()
+    lines = []
+
+    for line_coord in line_coords:
+        lines.append([board[row][col] for (row, col) in line_coord])
 
     for line in lines:
         if len(set(line)) == 1 and line[0] != EMPTY_SPACE:
             return line[0]
+
     return None
 
 def is_board_full(board):
@@ -64,28 +74,20 @@ def play():
         current_player = players[turn_number % 2]
         render(board)
 
-        move_coords = random_ai(board, current_player)
+        move_coords = ai.random_ai(board, current_player)
         # TODO: check if move is valid, raise exception if invalid
         # TODO: change make_move to be immutable
         make_move(board, move_coords, current_player)
         winner = get_winner(board)
 
         if winner:
-            print('Winner is %s!\n' % winner)
             render(board)
+            print('Winner is %s!\n' % winner)
             break
 
         if is_board_full(board):
-            print("It's a draw!")
             render(board)
+            print("It's a draw!\n")
             break
 
         turn_number += 1
-
-def random_ai(board, player):
-    possible_moves = []
-    for row in range(BOARD_HEIGHT):
-        for col in range(BOARD_WIDTH):
-            if board[row][col] == EMPTY_SPACE:
-                possible_moves.append((row, col))
-    return possible_moves[random.randint(0, len(possible_moves) - 1)]
