@@ -18,9 +18,23 @@ def get_move():
     tup_string = input('Enter Move (row, column): ')
     return literal_eval(tup_string)
 
-def make_move(board, move, player):
-    board[move[0]][move[1]] = player
-    # TODO: add logic for invalid moves
+def is_valid_move(board, move_coords):
+    # check out-of-bounds
+    if move_coords[0] < 0 or move_coords[0] >= BOARD_HEIGHT\
+        or move_coords[1] < 0 or move_coords[1] >= BOARD_WIDTH:
+        return False
+    # check if the space is already taken
+    if board[move_coords[0]][move_coords[1]] != EMPTY_SPACE:
+        return False
+
+    return True
+
+def make_move(board, move_coords, player):
+    if not is_valid_move(board, move_coords):
+        raise Exception('{0} is an invalid move!'.format(move_coords))
+
+    # TODO: change function to not mutate the arguments
+    board[move_coords[0]][move_coords[1]] = player
     return True
 
 def get_line_coords():
@@ -73,8 +87,9 @@ def play():
     while True:
         current_player = players[turn_number % 2]
         render(board)
+        print("It's %s's turn!\n" % current_player)
 
-        move_coords = ai.random_ai(board, current_player)
+        move_coords = get_move()
         # TODO: check if move is valid, raise exception if invalid
         # TODO: change make_move to be immutable
         make_move(board, move_coords, current_player)
