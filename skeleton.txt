@@ -2,11 +2,24 @@ board = new board()
 
 while True:
 
-    # TODO:
+    # todo
     current_player = '??'
 
-    print_board()
+    render(board)
 
-    get_move()
+    # Get the move the current current_player
+    # is going to make
+    move_coords = get_move()
 
-    
+    make_move(board, move_coords, current_player)
+
+    # Check if there's a winner
+    winner = get_winner(board)
+
+    if winner is not None:
+        print 'Winner is %s!' % winner
+        break
+
+    if is_board_full(board):
+        print "It's a draw!"
+        break

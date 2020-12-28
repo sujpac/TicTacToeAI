@@ -37,7 +37,7 @@ def make_move(board, move_coords, player):
     board[move_coords[0]][move_coords[1]] = player
     return True
 
-def get_line_coords():
+def get_all_line_coords():
     line_coords = []
     # Add horizontal lines
     for row in range(BOARD_HEIGHT):
@@ -57,7 +57,7 @@ def get_line_coords():
     return line_coords
 
 def get_winner(board):
-    line_coords = get_line_coords()
+    line_coords = get_all_line_coords()
     lines = []
 
     for line_coord in line_coords:
@@ -89,7 +89,7 @@ def play():
         render(board)
         print("It's %s's turn!\n" % current_player)
 
-        move_coords = get_move()
+        move_coords = ai.makes_winning_and_blocks_losing_move_ai(board, current_player)
         # TODO: check if move is valid, raise exception if invalid
         # TODO: change make_move to be immutable
         make_move(board, move_coords, current_player)
