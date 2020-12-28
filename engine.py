@@ -14,7 +14,7 @@ def render(board):
         print(' '.join(row))
     print()
 
-def get_move():
+def get_human_move(board, player):
     tup_string = input('Enter Move (row, column): ')
     return literal_eval(tup_string)
 
@@ -76,23 +76,35 @@ def is_board_full(board):
                 return False
     return True
 
-def play():
+def get_player_function(player):
+    if player == 'random_ai':
+        return ai.random_ai
+    elif player == 'makes_winning_move_ai':
+        return ai.makes_winning_move_ai
+    elif player == 'makes_winning_and_blocks_losing_move_ai':
+        return ai.makes_winning_and_blocks_losing_move_ai
+    elif player == 'human':
+        return get_human_move
+    else:
+        raise Exception('Unknown player function: ' + player)
+
+def play(p1_name = 'random_ai', p2_name = 'random_ai'):
     players = [
-        'X',
-        'O'
+        ('X', p1_name),
+        ('O', p2_name)
     ]
     turn_number = 0
     board = new_board()
 
     while True:
-        current_player = players[turn_number % 2]
+        current_player_id, current_player_name = players[turn_number % 2]
         render(board)
-        print("It's %s's turn!\n" % current_player)
+        print("It's %s's turn!\n" % current_player_id)
 
-        move_coords = ai.makes_winning_and_blocks_losing_move_ai(board, current_player)
+        move_coords = get_player_function(current_player_name)(board, current_player_id)
         # TODO: check if move is valid, raise exception if invalid
         # TODO: change make_move to be immutable
-        make_move(board, move_coords, current_player)
+        make_move(board, move_coords, current_player_id)
         winner = get_winner(board)
 
         if winner:
