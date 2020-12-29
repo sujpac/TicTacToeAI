@@ -102,7 +102,6 @@ def play(p1_name = 'random_ai', p2_name = 'random_ai'):
         print("It's %s's turn!\n" % current_player_id)
 
         move_coords = get_player_function(current_player_name)(board, current_player_id)
-        # TODO: check if move is valid, raise exception if invalid
         # TODO: change make_move to be immutable
         make_move(board, move_coords, current_player_id)
         winner = get_winner(board)

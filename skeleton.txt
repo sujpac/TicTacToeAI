@@ -1,8 +1,10 @@
+# Implement main game loop
+
 board = new board()
 
 while True:
 
-    # todo
+    # Todo
     current_player = '??'
 
     render(board)
@@ -23,3 +25,30 @@ while True:
     if is_board_full(board):
         print "It's a draw!"
         break
+
+# Implement minimax algorithm
+
+def minimax_score(board, current_player):
+    # If board is in terminal state, return the appropriate score
+    if x_has_won():
+        return 10
+    if o_has_won():
+        return -10
+    elif is_draw():
+        return 0
+
+    legal_moves =  get_legal_moves(board)
+
+    scores = []
+    for move in legal_moves:
+        new_board = make_move(board, move, current_player)
+
+        # Recursively visit minimax_score
+        opponent = get_opponent(current_player)
+        score = minimax_score(new_board, opponent)
+        scores.append(score)
+
+    if current_player == 'X':
+        return max(scores)
+    else:
+        return min(scores)
