@@ -4,7 +4,7 @@ board = new board()
 
 while True:
 
-    # Todo
+    # TODO: represent player
     current_player = '??'
 
     render(board)
@@ -28,6 +28,9 @@ while True:
 
 # Implement minimax algorithm
 
+# board is 2D grid to be scored
+# current_player is the player whose turn it is
+# ('X' or 'O')
 def minimax_score(board, current_player):
     # If board is in terminal state, return the appropriate score
     if x_has_won():
@@ -39,6 +42,7 @@ def minimax_score(board, current_player):
 
     legal_moves =  get_legal_moves(board)
 
+    # Iterate through the moves and calculate a score for each
     scores = []
     for move in legal_moves:
         new_board = make_move(board, move, current_player)
@@ -48,6 +52,8 @@ def minimax_score(board, current_player):
         score = minimax_score(new_board, opponent)
         scores.append(score)
 
+    # If current player is 'X' (our AI), find maximum score
+    # If current player is 'O' (our AI's opponent), find minimum score
     if current_player == 'X':
         return max(scores)
     else:

@@ -7,3 +7,4 @@ by breaking it up into a few smaller sub-projects:
 against each other locally
 2. Insert basic AI's into this game
 3. Repeatedly play AI's against each other to see which of them is the best
+4. Add minimax AI that always plays the optimal move
