@@ -1,5 +1,6 @@
 import engine
 import simple_ais as ai
+import minimax_ai as mm
 
 try:
     board = engine.new_board()
@@ -34,3 +35,12 @@ board = [
 print(ai.makes_winning_and_blocks_losing_move_ai(board, 'X'))
 # => should always print (0, 2)
 # => if it's printing (1, 0), the ai is blocking the losing move prematurely
+
+print()
+board = [
+  ['O', '-', '-'],
+  ['-', 'O', 'X'],
+  ['O', 'X', 'X']
+]
+print(mm.minimax_ai(board, 'X'))
+# => should always print (0, 2)

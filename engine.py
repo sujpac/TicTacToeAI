@@ -101,8 +101,8 @@ def play(p1_name = 'random_ai', p2_name = 'random_ai'):
 
     while True:
         current_player_id, current_player_name = players[turn_number % 2]
-        render(board)
         print("It's %s's turn!\n" % current_player_id)
+        render(board)
 
         player_function = get_player_function(current_player_name)
         move_coords = player_function(board, current_player_id)
@@ -111,13 +111,13 @@ def play(p1_name = 'random_ai', p2_name = 'random_ai'):
         winner = get_winner(board)
 
         if winner:
-            render(board)
             print('Winner is %s!\n' % winner)
+            render(board)
             break
 
         if is_board_full(board):
-            render(board)
             print("It's a draw!\n")
+            render(board)
             break
 
         turn_number += 1
