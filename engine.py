@@ -1,5 +1,6 @@
 from ast import literal_eval
 import simple_ais as ai
+import minimax_ai as mm
 
 BOARD_WIDTH = 3
 BOARD_HEIGHT = 3
@@ -85,6 +86,8 @@ def get_player_function(player):
         return ai.makes_winning_and_blocks_losing_move_ai
     elif player == 'human':
         return get_human_move
+    elif player == 'minimax_ai':
+        return mm.minimax_ai
     else:
         raise Exception('Unknown player function: ' + player)
 
@@ -101,7 +104,8 @@ def play(p1_name = 'random_ai', p2_name = 'random_ai'):
         render(board)
         print("It's %s's turn!\n" % current_player_id)
 
-        move_coords = get_player_function(current_player_name)(board, current_player_id)
+        player_function = get_player_function(current_player_name)
+        move_coords = player_function(board, current_player_id)
         # TODO: change make_move to be immutable
         make_move(board, move_coords, current_player_id)
         winner = get_winner(board)
