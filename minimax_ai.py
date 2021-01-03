@@ -14,9 +14,6 @@ def minimax_ai(board, player):
         scores.append(score)
 
     sorted_best_moves = [x for _, x in sorted(zip(scores, legal_moves))]
-    #print(legal_moves)
-    #print(scores)
-    #print(sorted_best_moves)
     return sorted_best_moves[-1]
 
 def _minimax_score(board, player_current, player_main):

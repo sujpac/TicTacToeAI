@@ -1,4 +1,4 @@
-from ast import literal_eval
+import ast
 import simple_ais as ai
 import minimax_ai as mm
 
@@ -16,8 +16,15 @@ def render(board):
     print()
 
 def get_human_move(board, player):
-    tup_string = input('Enter Move (row, column): ')
-    return literal_eval(tup_string)
+    while True:
+        tup_string = input('Enter Move (row, column): ')
+        move_coords = ast.literal_eval(tup_string)
+        if is_valid_move(board, move_coords):
+            return move_coords
+        else:
+            print('Move invalid! Please try again.')
+    print()
+    return None
 
 def is_valid_move(board, move_coords):
     # check out-of-bounds
