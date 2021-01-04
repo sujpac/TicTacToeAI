@@ -91,7 +91,7 @@ def get_player_function(player):
         return ai.makes_winning_move_ai
     elif player == 'makes_winning_and_blocks_losing_move_ai':
         return ai.makes_winning_and_blocks_losing_move_ai
-    elif player == 'human':
+    elif player == 'human_player':
         return get_human_move
     elif player == 'minimax_ai':
         return mm.minimax_ai

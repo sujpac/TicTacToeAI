@@ -1,4 +1,4 @@
-# Implement main game loop
+# Sketch out main game loop
 
 board = new board()
 
@@ -26,7 +26,7 @@ while True:
         print "It's a draw!"
         break
 
-# Implement minimax algorithm
+# Sketch out minimax algorithm
 
 # board is 2D grid to be scored
 # current_player is the player whose turn it is
@@ -58,3 +58,20 @@ def minimax_score(board, current_player):
         return max(scores)
     else:
         return min(scores)
+
+# Sketch out caching for minimax
+
+cache = {}
+
+def minimax_score_with_cache():
+    # Turn the board into a string so it can be used as a dictionary key
+    board_cache_key = str(board)
+
+    if board_cache_key not in cache:
+        score = ... # Do minimax here
+
+        # Once calculated, store the score in the cache
+        cache[board_cache_key] = score
+
+    # Return the cached result
+    return cache[board_cache_key]
