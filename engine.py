@@ -17,6 +17,8 @@ def render(board):
 
 def get_human_move(board, player):
     while True:
+        # TODO: make input processing more robust. handle errors, make sure
+        # type(input) is tuple
         tup_string = input('Enter Move (row, column): ')
         move_coords = ast.literal_eval(tup_string)
         if is_valid_move(board, move_coords):
